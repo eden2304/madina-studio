@@ -4,13 +4,17 @@ const path = require('path');
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
 app.post('/api/generate', async (req, res) => {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'ANTHROPIC_API_KEY not set' });
+    return res.status(500).json({
+      error: { type: 'server_error', message: 'ANTHROPIC_API_KEY לא מוגדר — הוסף אותו ב-Environment Variables בפלטפורמת הפריסה' }
+    });
   }
 
   try {
@@ -25,9 +29,15 @@ app.post('/api/generate', async (req, res) => {
     });
 
     const data = await response.json();
-    res.json(data);
+
+    // Normalize string errors so frontend always gets { error: { message } }
+    if (data.error && typeof data.error === 'string') {
+      data.error = { type: 'api_error', message: data.error };
+    }
+
+    res.status(response.status).json(data);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: { type: 'network_error', message: err.message } });
   }
 });
 
