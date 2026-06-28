@@ -361,6 +361,37 @@ function buildLyrics(s){
   L.push('[Chorus]\n'+s.ch);
   return L.join('\n\n');
 }
+function stripN(t){return (t||'').replace(/[֑-ׇ]/g,'')}
+
+function renderSong(s,ordered,norm,th,en){
+  document.getElementById('songTitle').textContent=s.title||'';
+  var ph=ordered.map(function(id){return '<span class="pill pg">'+A[id].name+' '+norm[id]+'%</span>'}).join('');
+  ph+='<span class="pill pt">'+th.name+'</span>';
+  ph+='<span class="pill pe">'+en.name+'</span>';
+  if(s.tempo) ph+='<span class="pill pm">'+s.tempo+'</span>';
+  document.getElementById('songPills').innerHTML=ph;
+  document.getElementById('blendNote').textContent=s.blend_note||'';
+
+  var secs=[{l:'בית 1',t:s.v1,c:'ss'}];
+  if(s.pre) secs.push({l:'גשר עולה',t:s.pre,c:'ss pre'});
+  secs.push({l:'✦ פזמון',t:s.ch,c:'ss chorus'});
+  secs.push({l:'בית 2',t:s.v2,c:'ss'});
+  if(s.pre) secs.push({l:'גשר עולה',t:s.pre,c:'ss pre'});
+  secs.push({l:'✦ פזמון',t:s.ch,c:'ss chorus'});
+  if(s.bridge) secs.push({l:'מעבר',t:s.bridge,c:'ss bridge'});
+  secs.push({l:'✦ פזמון (סיום)',t:s.ch,c:'ss chorus'});
+  document.getElementById('songBody').innerHTML=secs.map(function(x){
+    return '<div class="'+x.c+'"><div class="ss-lbl">'+x.l+'</div><div class="ss-txt">'+(x.t||'')+'</div></div>';
+  }).join('');
+
+  document.getElementById('sfStyle').textContent=buildStyle(norm,ordered);
+  document.getElementById('sfTitle').textContent=stripN(s.title||'').trim();
+  document.getElementById('sfLyrics').textContent=buildLyrics(s);
+
+  document.getElementById('loadWrap').className='load-wrap';
+  document.getElementById('songOut').className='song-out on';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
 function setLoadMsg(i){document.getElementById('loadMsg').textContent=LOAD_MSGS[i%LOAD_MSGS.length]}
 function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
@@ -388,7 +419,7 @@ function generate(){
   var styleBlocks=ordered.map(function(id){return '• '+A[id].name+' ('+norm[id]+'%): '+A[id].write}).join('\n');
   var samples=ordered.slice(0,2).map(function(id){return A[id].name+' — "'+A[id].sample+'"'}).join('\n');
 
-  var system='אתה מחבר השירים הישראלי הטוב בארץ, ובקיא בדקדוק העברי ובניקוד תקני. הפנמת לעומק את הכתיבה של פאר טסי, אושר כהן, בן צור, אייל גולן, רביד פלוטניק ועומר אדם — את אוצר המילים, החריזה, מבנה השיר והרגש של כל אחד מהם. אתה כותב שירי להיט מקוריים בעברית טבעית וחיה, עם ניקוד מלא ומדויק על כל מילה: חרוזים אמיתיים שלא נשמעים כפויים, משקל הברות עקבי בשורות מקבילות, ודימויים קונקרטיים. אתה נמנע מקלישאות, מעברית מתורגמת ומניסוחים מלאכותיים. אתה מחזיר JSON תקין בלבד — בלי טקסט נוסף ובלי סימני קוד.';
+  var system='אתה מחבר השירים הישראלי הטוב בארץ. הפנמת לעומק את הכתיבה של פאר טסי, אושר כהן, בן צור, אייל גולן, רביד פלוטניק ועומר אדם — את אוצר המילים, החריזה, מבנה השיר והרגש של כל אחד מהם. אתה כותב שירי להיט מקוריים בעברית טבעית, חיה ומדויקת: חרוזים אמיתיים שלא נשמעים כפויים, משקל הברות עקבי בשורות מקבילות, ודימויים קונקרטיים. אתה נמנע מקלישאות, מעברית מתורגמת ומניסוחים מלאכותיים. אתה מחזיר JSON תקין בלבד — בלי טקסט נוסף ובלי סימני קוד.';
 
   var prompt='כתוב שיר מקורי וייחודי לחלוטין ברמת להיט ישראלי.\n\n';
   prompt+='— תמהיל הסגנונות (אחוז גבוה = השפעה חזקה יותר; הזמר הדומיננטי קובע את הצליל והמבנה) —\n'+styleBlocks+'\n';
@@ -400,7 +431,7 @@ function generate(){
   prompt+='— ייחודיות (חובה) —\nשיר חדש לגמרי. עגן אותו סביב הרגע: "'+seedScene+'", בזווית: '+seedAngle+'. (מזהה יצירה '+seedNum+')\n';
   prompt+='אל תחזור על דימויים שחוקים או על שורות צפויות.\n\n';
   prompt+='— כללי כתיבה —\n';
-  prompt+='1. ניקוד מלא ומדויק על כל מילה בשיר, לפי כללי הדקדוק התקני (דגש, שווא, קמץ ופתח נכונים). זה קריטי — נקד את כל השורות. במקביל שמור על עברית טבעית וחיה כמו בשירים אמיתיים.\n';
+  prompt+='1. עברית טבעית, חיה ומדוברת כמו בשירים אמיתיים ברדיו. כתוב ללא ניקוד — הניקוד יתווסף אוטומטית בשלב נפרד.\n';
   prompt+='2. חרוזים אמיתיים ולא כפויים. '+th.rh+'\n';
   prompt+='3. שורות ארוכות ומלאות — בדרך כלל 8-13 מילים בשורה. הימנע משורות קצרצרות של 3-4 מילים; כתוב משפטים שלמים וזורמים. שמור משקל אחיד ומספר הברות דומה בשורות מקבילות.\n';
   prompt+='4. פזמון עם הוק מרכזי קצר (4-7 מילים) שלא יוצא מהראש, חוזר זהה בכל פעם.\n';
@@ -415,7 +446,7 @@ function generate(){
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      max_tokens:3200,
+      max_tokens:2600,
       temperature:0.9,
       messages:[{role:'system',content:system},{role:'user',content:prompt}]
     })
@@ -435,33 +466,22 @@ function generate(){
     try{ s=JSON.parse(txt.slice(i0,i1+1)); }
     catch(e){ s=JSON.parse(txt.slice(i0,i1+1).replace(/,\s*([}\]])/g,'$1')); }
 
-    document.getElementById('songTitle').textContent=s.title||'';
-    var ph=ordered.map(function(id){return '<span class="pill pg">'+A[id].name+' '+norm[id]+'%</span>'}).join('');
-    ph+='<span class="pill pt">'+th.name+'</span>';
-    ph+='<span class="pill pe">'+en.name+'</span>';
-    if(s.tempo) ph+='<span class="pill pm">'+s.tempo+'</span>';
-    document.getElementById('songPills').innerHTML=ph;
-    document.getElementById('blendNote').textContent=s.blend_note||'';
-
-    var secs=[{l:'בית 1',t:s.v1,c:'ss'}];
-    if(s.pre) secs.push({l:'גשר עולה',t:s.pre,c:'ss pre'});
-    secs.push({l:'✦ פזמון',t:s.ch,c:'ss chorus'});
-    secs.push({l:'בית 2',t:s.v2,c:'ss'});
-    if(s.pre) secs.push({l:'גשר עולה',t:s.pre,c:'ss pre'});
-    secs.push({l:'✦ פזמון',t:s.ch,c:'ss chorus'});
-    if(s.bridge) secs.push({l:'מעבר',t:s.bridge,c:'ss bridge'});
-    secs.push({l:'✦ פזמון (סיום)',t:s.ch,c:'ss chorus'});
-    document.getElementById('songBody').innerHTML=secs.map(function(x){
-      return '<div class="'+x.c+'"><div class="ss-lbl">'+x.l+'</div><div class="ss-txt">'+(x.t||'')+'</div></div>';
-    }).join('');
-
-    document.getElementById('sfStyle').textContent=buildStyle(norm,ordered);
-    document.getElementById('sfTitle').textContent=(s.title||'').replace(/[֑-ׇ]/g,'').trim();
-    document.getElementById('sfLyrics').textContent=buildLyrics(s);
-
-    document.getElementById('loadWrap').className='load-wrap';
-    document.getElementById('songOut').className='song-out on';
-    window.scrollTo({top:0,behavior:'smooth'});
+    // Model wrote clean Hebrew — add accurate niqqud via Dicta, then render.
+    // If niqqud is unavailable for any reason, fall back to the plain text.
+    document.getElementById('loadMsg').textContent='מוסיף ניקוד…';
+    var nf=['title','v1','pre','ch','v2','bridge'];
+    return fetch('/api/nikud',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({texts:nf.map(function(f){return stripN(s[f]||'')})})
+    })
+    .then(function(r){return r.json()})
+    .then(function(nk){
+      if(nk&&nk.texts&&nk.texts.length===nf.length){
+        nf.forEach(function(f,i){if(nk.texts[i])s[f]=nk.texts[i]});
+      }
+    })
+    .catch(function(){/* niqqud unavailable — keep plain Hebrew */})
+    .then(function(){renderSong(s,ordered,norm,th,en)});
   })
   .catch(function(e){
     document.getElementById('loadWrap').className='load-wrap';

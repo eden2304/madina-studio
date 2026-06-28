@@ -17,7 +17,39 @@ const MODELS = [
 
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
+// Dicta Nakdan — gold-standard Hebrew vocalization. We let the LLM write clean
+// (un-niqqud) Hebrew and add accurate niqqud here, because LLMs can't produce
+// correct niqqud reliably. If this ever fails, callers fall back to plain text.
+const NAKDAN_URL = 'https://nakdan-5-1.loadbalancer.dicta.org.il/api';
+
+async function addNikud(text) {
+  if (!text || !/[֐-׿]/.test(text)) return text;
+  const r = await fetch(NAKDAN_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task: 'nakdan', data: text, genre: 'modern' })
+  });
+  if (!r.ok) throw new Error('nakdan ' + r.status);
+  const arr = await r.json();
+  let out = '';
+  for (const t of arr) {
+    if (t.sep || !Array.isArray(t.options) || t.options.length === 0) {
+      out += (t.word || '');
+    } else {
+      out += String(t.options[0]).replace(/\|/g, ''); // drop morpheme-split marks
+    }
+  }
+  return out;
+}
+
 app.get('/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
+
+// Adds niqqud to an array of strings; any string that fails keeps its plain form.
+app.post('/api/nikud', async (req, res) => {
+  const texts = Array.isArray(req.body && req.body.texts) ? req.body.texts : [];
+  const out = await Promise.all(texts.map(t => addNikud(t).catch(() => t)));
+  res.json({ texts: out });
+});
 
 app.post('/api/generate', async (req, res) => {
   const apiKey = process.env.GROQ_API_KEY;
