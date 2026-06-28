@@ -10,20 +10,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
 app.post('/api/generate', async (req, res) => {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return res.status(500).json({
-      error: { type: 'server_error', message: 'ANTHROPIC_API_KEY לא מוגדר — הוסף אותו ב-Environment Variables בפלטפורמת הפריסה' }
+      error: { type: 'server_error', message: 'GROQ_API_KEY לא מוגדר — הוסף אותו ב-Environment Variables בפלטפורמת הפריסה' }
     });
   }
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify(req.body)
     });

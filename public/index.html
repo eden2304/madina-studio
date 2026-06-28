@@ -378,10 +378,12 @@ function generate(){
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      model:'claude-sonnet-4-6',
+      model:'llama-3.3-70b-versatile',
       max_tokens:2000,
-      system:system,
-      messages:[{role:'user',content:prompt}]
+      messages:[
+        {role:'system',content:system},
+        {role:'user',content:prompt}
+      ]
     })
   })
   .then(function(r){return r.json()})
@@ -391,8 +393,8 @@ function generate(){
               (typeof data.error==='string')?data.error:JSON.stringify(data.error);
       throw new Error(msg);
     }
-    if(!data.content||!data.content.length) throw new Error('תשובה ריקה מהשרת');
-    var txt=data.content.map(function(i){return i.text||''}).join('');
+    if(!data.choices||!data.choices.length) throw new Error('תשובה ריקה מהשרת');
+    var txt=data.choices[0].message.content||'';
     var m=txt.match(/\{[\s\S]*?\}(?=\s*$)/)||txt.match(/\{[\s\S]*\}/);
     if(!m) throw new Error('לא הצלחתי לנתח את תשובת הבינה המלאכותית. נסה שוב.');
     var s=JSON.parse(m[0]);
