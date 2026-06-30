@@ -160,6 +160,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     </div>
 
     <div>
+      <div class="sec-lbl">מין הזמר/ת</div>
+      <div class="theme-grid" id="genderGrid"></div>
+    </div>
+
+    <div>
       <div class="sec-lbl">עוצמה</div>
       <div class="theme-grid" id="energyGrid"></div>
     </div>
@@ -212,42 +217,48 @@ var A = {
     sub:'בלדות מזרחיות · רגש · געגוע וכאב',
     suno:'emotional Mizrahi ballad, soulful melancholic male vocals with deep vibrato and silsul ornamentation, oud, qanun, lush strings, soft darbuka, minor Hijaz maqam, slow 72-84 BPM, intimate and aching',
     write:'בלדה רגשית עמוקה. פנייה ישירה לאישה בגוף שני. געגוע, כאב, לילות בודדים, אהבה שאבדה. חזרה אובססיבית על שורת מפתח אחת. שורות מלאות וזורמות (8-12 מילים), שפה יומיומית ופשוטה אך טעונה רגש. דימויים: לילה, קור, חלון, טלפון, חדר ריק, דמעות. פזמון מתפרץ עם הוק קצר וחד.',
-    sample:'איך את הולכת לי בלילות / ולא נשאר ממך אפילו קול'
+    words:'לילה, בודד, געגוע, דמעה, חלון, גשם, קור, ריק, צל, נשמה, ליבי, אהובה, מתגעגע, נשבר, חוזרת, הולכת, בלעדייך, תחזרי',
+    sample:'איך את הולכת לי בלילות, ולא נשאר ממך אפילו קול / הלילה שוב בלעדייך, והשקט בחדר צועק בקול'
   },
   osher: {
     name:'אושר כהן', color:'var(--osher)',
     sub:'פופ מזרחי קליט · משחקי מילים · גרוב',
     suno:'upbeat catchy Mizrahi pop, bright warm male vocals, modern oriental production, oud and electric guitar, programmed darbuka groove, Mediterranean hooks, 92-104 BPM, danceable and uplifting',
     write:'פופ מזרחי קליט ואופטימי. הוק מתנגן שמתחבב מיד. משחקי מילים וכפל משמעות. סלנג עכשווי ("כפרה", "מאמי", "תכל\'ס"). אנרגיה חיובית גם כשהנושא עצוב. שורות בינוניות (8-12 מילים), חרוז פנימי עשיר. פזמון שאי אפשר לא לשיר איתו.',
-    sample:'את הכפרה של החיים שלי / כל מה שביקשתי בא אליי בבת אחת'
+    words:'כפרה, מאמי, נשמה, מתוקה, חיוך, מזל, גורל, ריקוד, אש, מלאך, אלופה, אין כמוך, בא לי, אהובה',
+    sample:'את הכפרה של החיים שלי, כל מה שביקשתי בא בבת אחת / מאמי תחייכי אליי עכשיו, ותראי איך הלילה משתנה'
   },
   benzur: {
     name:'בן צור', color:'var(--benzur)',
     sub:'פופ אמוני · רוחניות · כנות',
     suno:'sincere Israeli faith pop, warm honest male vocals, acoustic guitar, grand piano, soft strings, building dynamics, 72-86 BPM major key, spiritual and uplifting',
     write:'כנות מוחלטת ופשטות. אמונה, הודיה, משפחה, חיפוש פנימי. רמיזות לתנ"ך ולתפילה בהקשר אישי ומודרני. שאלות ישירות לשמיים ולעצמי. פזמון שמרים את הנשמה, מנחם ומקומם. שפה נקייה, חמה ולא מתחכמת.',
-    sample:'אני מודה על כל נשימה שאתה נותן / על הדרך הארוכה שהביאה אותי הלום'
+    words:'אלוהים, תודה, אמונה, נשמה, דרך, אור, שמיים, תפילה, לב, בית, אמא, מתנה, נשימה, חסד, להאמין, להודות',
+    sample:'אני מודה על כל נשימה שאתה נותן לי במתנה / על הדרך הארוכה שהחזירה אותי הביתה אל עצמי'
   },
   eyal: {
     name:'אייל גולן', color:'var(--eyal)',
     sub:'מדינה קלאסי · רומנטי · אנתמי',
     suno:'classic Israeli Mizrahi pop, powerful passionate male vocals with rich silsul, brass section, sweeping strings, darbuka and bouzouki, anthemic romantic, 90-108 BPM, grand and emotional',
     write:'הזמר המזרחי הקלאסי. פנייה רומנטית ישירה ונלהבת לאישה. רגש גדול, גוזמה רומנטית, הבטחות, אהבה כמו אש. פזמון אנתמי שכל אולם שר יחד. שורות מלאות, מנגינה רחבה, ביטחון וכריזמה.',
-    sample:'תגידי לי כן ואת העולם אביא לך / אני אשרוף בשבילך את כל הגשרים'
+    words:'מלכה, אהובה, אש, נשמה, יקירתי, לנצח, בשבילך, נשיקה, ליבי, יפה שלי, אלופה, גורל, את שלי, תני לי',
+    sample:'תגידי לי כן ואני מביא לך את כל העולם / בשבילך אשרוף הלילה את כל הגשרים מאחוריי'
   },
   ravid: {
     name:'רביד פלוטניק', color:'var(--ravid)',
     sub:'היפ-הופ עברי · משחקי מילים · חכם וכן',
     suno:'Israeli Hebrew hip-hop, conversational rhythmic male rap verses with a melodic sung chorus, boom-bap meets modern trap, jazzy samples, warm live bass, crisp drums, 84-96 BPM, witty introspective urban',
     write:'היפ-הופ עברי חכם. פלואו דיבורי וקצבי עם צפיפות גבוהה של חרוזים פנימיים. משחקי מילים מבריקים, אירוניה והומור עצמי לצד פגיעוּת אמיתית. תצפיות חברתיות, תל אביב, יומיום, רפרנסים לתרבות. עברית עשירה ומדויקת, שורות ארוכות יותר עם הברות צפופות. הבתים מדוברים — הפזמון מלודי וקליט.',
-    sample:'אני כותב את זה בשלוש לפנות בוקר בתל אביב / כל העיר ישנה ורק הראש שלי עוד מקליט'
+    words:'תל אביב, רחוב, ראש, אמת, חלום, זמן, פחד, אגו, מילים, חרוז, מיקרופון, בודד, חופש, ספק, באמת',
+    sample:'אני כותב את זה בשלוש לפנות בוקר בתל אביב / כל העיר ישנה ורק הראש שלי עוד מקליט ביטים'
   },
   omer: {
     name:'עומר אדם', color:'var(--omer)',
     sub:'פופ מזרחי מודרני · להיטים גדולים',
     suno:'modern Israeli Mizrahi pop superstar sound, youthful charismatic male vocals, big polished production, oriental synths, oud, trap-influenced darbuka, huge anthemic hooks, contemporary, 95-118 BPM',
     write:'סופרסטאר פופ מזרחי עכשווי. הוקים ענקיים, צליל מודרני וצעיר. נע בין בלדה רגשית ללהיט מועדונים. אהבה, חיי לילה, ביטחון, תל אביב. סלנג עכשווי, אנרגיה גבוהה, ראוותנות מודרנית. מנגינה גדולה שמתאימה לרדיו ולקליפ.',
-    sample:'הלילה כל העיר שלנו ואת איתי / שנינו על הגג מתנשקים מול תל אביב'
+    words:'לילה, מסיבה, תל אביב, אהבה, ריקוד, אש, מלכה, חופש, גג, אורות, קיץ, ים, כל הלילה, רק את, בא לי',
+    sample:'הלילה כל העיר שלנו ואת לידי / שנינו על הגג מתנשקים מול האורות של תל אביב'
   }
 };
 var KEYS = ['peer','osher','benzur','eyal','ravid','omer'];
@@ -270,6 +281,14 @@ var ENERGY = {
   dance:   {name:'ריקוד',  suno:'upbeat Mizrahi dance pop, driving groove, club energy, 108-122 BPM',  write:'קצבי ומתנועע, שורות קצרות, אנרגיית ריקוד.'}
 };
 var energy = 'medium';
+
+var GENDER = {
+  male:   {name:'גבר',  suno:'male',
+    rule:'נקודת מבט: זמר גבר. כל פעלי ותארי הגוף-ראשון ("אני") בלשון זכר (אני אוהב, הולך, נשבר). אם השיר פונה לאהובה — הנמען הוא אישה, וכל פניות הגוף-שני ("את", "אותך", "שלך", "בואי", "תחזרי") בלשון נקבה, באופן עקבי לכל אורך השיר.'},
+  female: {name:'אישה', suno:'female',
+    rule:'נקודת מבט: זמרת אישה. כל פעלי ותארי הגוף-ראשון ("אני") בלשון נקבה (אני אוהבת, הולכת, נשברת). אם השיר פונה לאהוב — הנמען הוא גבר, וכל פניות הגוף-שני ("אתה", "אותך", "שלך", "בוא", "תחזור") בלשון זכר, באופן עקבי לכל אורך השיר.'}
+};
+var gender = 'male';
 
 /* ===== Uniqueness seeds — anchor each song somewhere new ===== */
 var SCENES = [
@@ -310,6 +329,9 @@ function buildSidebar(){
   document.getElementById('energyGrid').innerHTML = Object.keys(ENERGY).map(function(id){
     return '<button class="tb'+(id===energy?' on':'')+'" data-energy="'+id+'" onclick="pickE(\''+id+'\',this)">'+ENERGY[id].name+'</button>';
   }).join('');
+  document.getElementById('genderGrid').innerHTML = Object.keys(GENDER).map(function(id){
+    return '<button class="tb'+(id===gender?' on':'')+'" data-gender="'+id+'" onclick="pickG(\''+id+'\',this)">'+GENDER[id].name+'</button>';
+  }).join('');
 }
 
 function getNorm(){
@@ -330,6 +352,7 @@ function renderSliders(){
 }
 function pickT(id,el){theme=id;document.querySelectorAll('[data-theme]').forEach(function(b){b.className='tb'});el.className='tb on'}
 function pickE(id,el){energy=id;document.querySelectorAll('[data-energy]').forEach(function(b){b.className='tb'});el.className='tb on'}
+function pickG(id,el){gender=id;document.querySelectorAll('[data-gender]').forEach(function(b){b.className='tb'});el.className='tb on'}
 
 function cp(id,btn){
   var txt=document.getElementById(id).innerText||'';
@@ -348,7 +371,10 @@ function buildStyle(norm,ordered){
   parts.push(en.suno);
   parts.push('mood: '+th.suno);
   parts.push('Hebrew lyrics, male lead vocals, clear pronunciation, emotional dynamic build, Israeli radio hit');
-  return parts.join(', ');
+  var str=parts.join(', ');
+  // The artist profiles describe male singers — flip the vocal gender when needed.
+  if(gender==='female') str=str.replace(/\bmale\b/g,'female');
+  return str;
 }
 function buildLyrics(s){
   var L=['[Verse 1]\n'+s.v1];
@@ -368,6 +394,7 @@ function renderSong(s,ordered,norm,th,en){
   var ph=ordered.map(function(id){return '<span class="pill pg">'+A[id].name+' '+norm[id]+'%</span>'}).join('');
   ph+='<span class="pill pt">'+th.name+'</span>';
   ph+='<span class="pill pe">'+en.name+'</span>';
+  ph+='<span class="pill pm">'+GENDER[gender].name+'</span>';
   if(s.tempo) ph+='<span class="pill pm">'+s.tempo+'</span>';
   document.getElementById('songPills').innerHTML=ph;
   document.getElementById('blendNote').textContent=s.blend_note||'';
@@ -416,8 +443,8 @@ function generate(){
   var customTopic=(document.getElementById('topicInput').value||'').trim();
   var seedScene=pick(SCENES), seedAngle=pick(ANGLES), seedNum=Math.floor(Math.random()*100000);
 
-  var styleBlocks=ordered.map(function(id){return '• '+A[id].name+' ('+norm[id]+'%): '+A[id].write}).join('\n');
-  var samples=ordered.slice(0,2).map(function(id){return A[id].name+' — "'+A[id].sample+'"'}).join('\n');
+  var styleBlocks=ordered.map(function(id){return '• '+A[id].name+' ('+norm[id]+'%): '+A[id].write+'\n   אוצר מילים ומוטיבים אופייניים: '+A[id].words}).join('\n');
+  var samples=ordered.slice(0,3).map(function(id){return A[id].name+' — "'+A[id].sample+'"'}).join('\n');
 
   var system='אתה מחבר השירים הישראלי הטוב בארץ. הפנמת לעומק את הכתיבה של פאר טסי, אושר כהן, בן צור, אייל גולן, רביד פלוטניק ועומר אדם — את אוצר המילים, החריזה, מבנה השיר והרגש של כל אחד מהם. אתה כותב שירי להיט מקוריים בעברית טבעית, חיה ומדויקת: חרוזים אמיתיים שלא נשמעים כפויים, משקל הברות עקבי בשורות מקבילות, ודימויים קונקרטיים. אתה נמנע מקלישאות, מעברית מתורגמת ומניסוחים מלאכותיים. אתה מחזיר JSON תקין בלבד — בלי טקסט נוסף ובלי סימני קוד.';
 
@@ -425,9 +452,12 @@ function generate(){
   prompt+='— תמהיל הסגנונות (אחוז גבוה = השפעה חזקה יותר; הזמר הדומיננטי קובע את הצליל והמבנה) —\n'+styleBlocks+'\n';
   prompt+='הזמר הדומיננטי: '+A[dom].name+'\n\n';
   prompt+='— רפרנס סגנוני (אל תעתיק, רק תקלוט את הטקסטורה והגישה) —\n'+samples+'\n\n';
+  prompt+='שאב השראה עמוקה מאוצר המילים, הביטויים, המוטיבים והדימויים של הזמרים שבתמהיל — לפי המשקל היחסי שלהם. שלב מילים וניסוחים אופייניים להם, אך כתוב שורות מקוריות לחלוטין (לא ציטוט של שיר קיים). ככל שזמר דומיננטי יותר, כך הצבע שלו בולט יותר בשיר.\n\n';
   prompt+='— נושא —\n'+th.name+': '+th.desc+'\n';
   if(customTopic) prompt+='דגש מהמשתמש (חובה לשלב): '+customTopic+'\n';
   prompt+='\n— עוצמה והפקה —\n'+en.name+': '+en.write+'\n\n';
+  prompt+='— מין הזמר/ת ונקודת מבט (קריטי לעקביות דקדוקית) —\n'+GENDER[gender].rule+'\n';
+  prompt+='שמור על עקביות מוחלטת לכל אורך השיר — אסור לערבב לשון זכר ולשון נקבה באותו תפקיד (לא אצל הדובר ולא אצל הנמען).\n\n';
   prompt+='— ייחודיות (חובה) —\nשיר חדש לגמרי. עגן אותו סביב הרגע: "'+seedScene+'", בזווית: '+seedAngle+'. (מזהה יצירה '+seedNum+')\n';
   prompt+='אל תחזור על דימויים שחוקים או על שורות צפויות.\n\n';
   prompt+='— כללי כתיבה —\n';
